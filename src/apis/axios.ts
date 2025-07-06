@@ -4,7 +4,7 @@ import { useAuthStore } from "../stores/auth";
 
 // baseURL을 /api로 설정하면 vite.config.ts의 프록시 설정에 따라 요청이 전달됩니다.
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 15000,
 });
 

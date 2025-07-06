@@ -1,4 +1,4 @@
-import api from "./index";
+import api from "./axios";
 
 // --- 타입 정의 ---
 
@@ -101,13 +101,9 @@ export const getFundingDetail = async (id: number): Promise<FundingItem> => {
  * @param data { id, count }
  */
 export const createFunding = async (data: CreateFundingRequest) => {
-  // Swagger 명세와 달리, itemId는 URL 경로로만 전달하고, count만 쿼리로 전달합니다.
-  // 서버에서 중복된 itemId로 인해 500 오류가 발생하는 것을 방지하기 위함입니다.
   const { id, count } = data;
-  const response = await api.post<ApiResponse<object>>(`/funding/${id}`, null, {
-    params: {
-      count,
-    },
+  const response = await api.post<ApiResponse<object>>(`/funding/${id}`, {
+    count,
   });
   return response.data;
 };
@@ -127,8 +123,9 @@ export const deleteFunding = async (id: number) => {
  */
 export const createReview = async (data: CreateReviewRequest) => {
   const { id, content } = data;
-  const response = await api.post<ApiResponse<object>>("/review", null, {
-    params: { itemId: id, content }, // 프론트엔드의 id를 서버의 itemId로 매핑
+  const response = await api.post<ApiResponse<object>>("/review", {
+    itemId: id,
+    content,
   });
   return response.data;
 };

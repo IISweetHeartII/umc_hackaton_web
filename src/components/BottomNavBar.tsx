@@ -9,7 +9,7 @@ const navItems = [
     label: "홈",
     icon: <AiOutlineHome size={24} />,
     activeIcon: <AiFillHome size={24} />,
-    path: "/home",
+    path: "/",
   },
   {
     label: "구매",

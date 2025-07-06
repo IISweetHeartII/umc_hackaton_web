@@ -51,7 +51,10 @@ export interface SignupResult {
  * @returns Promise<LoginResult>
  */
 export const login = async (data: LoginRequest): Promise<LoginResult> => {
-  const response = await api.post<ApiResponse<LoginResult>>("/login", data);
+  const response = await api.post<ApiResponse<LoginResult>>(
+    import.meta.env.VITE_API_URL + "/login",
+    data
+  );
   return response.data.result;
 };
 
@@ -62,7 +65,7 @@ export const login = async (data: LoginRequest): Promise<LoginResult> => {
  */
 export const signup = async (data: SignupRequest): Promise<SignupResult> => {
   const response = await api.post<ApiResponse<SignupResult>>(
-    "/users/join",
+    import.meta.env.VITE_API_URL + "/users/join",
     data
   );
   return response.data.result;

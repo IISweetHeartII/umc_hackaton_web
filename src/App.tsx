@@ -18,6 +18,7 @@ import ExtraPage from "./pages/signup/ExtraPage";
 import CompletePage from "./pages/signup/CompletePage";
 
 // Protected Pages
+import HomePage from "./pages/HomePage";
 import MyPage from "./pages/MyPage";
 import CounselPage from "./pages/CounselPage";
 import Category1Page from "./pages/Category1Page";
@@ -73,7 +74,7 @@ function App() {
       <Routes>
         {/* 인증이 필요 없는 페이지 */}
         <Route element={<PublicLayout />}>
-          <Route path="/" element={<IntroPage />} />
+          <Route path="/intro" element={<IntroPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup/terms" element={<TermsPage />} />
           <Route path="/signup/account" element={<AccountPage />} />
@@ -90,6 +91,7 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route path="/" element={<HomePage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/purchase" element={<PurchaseListPage />} />
           <Route path="/purchase/:id" element={<PurchaseDetailPage />} />

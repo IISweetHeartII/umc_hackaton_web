@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import CategoryTopBar from "../components/CategoryTopBar";
-import api from "../apis"; // axios 인스턴스
+import api from "../apis/axios"; // axios 인스턴스
 import { type Announcement } from "../apis/announcements";
 
 const AnnouncementDetailPage = () => {

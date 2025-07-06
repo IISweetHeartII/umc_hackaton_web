@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { FiSearch, FiFilter } from "react-icons/fi";
-import api from "../apis";
+import api from "../apis/axios";
 
 // 상담카드 UI (아래에서 정의)
 import CounselCard from "../components/CounselCard";
@@ -12,7 +12,7 @@ interface Counsel {
   facilityName: string;
   phone: string;
   webUrl: string;
-  weekdayStartTime: string;   // "09:00:00"
+  weekdayStartTime: string; // "09:00:00"
   weekdayEndTime: string;
   weekendStartTime: string;
   weekendEndTime: string;
@@ -35,8 +35,9 @@ const CounselPage = () => {
   // 서버 연동
   useEffect(() => {
     setLoading(true);
-    api.get("/facilities/")
-      .then(res => setList(res.data.result || []))
+    api
+      .get("/facilities/")
+      .then((res) => setList(res.data.result || []))
       .catch(() => setList([]))
       .finally(() => setLoading(false));
   }, []);
@@ -51,7 +52,7 @@ const CounselPage = () => {
 
   // 실제 표시 데이터
   const filteredList = useMemo(() => {
-    return list.filter(item => {
+    return list.filter((item) => {
       // 이름/키워드
       const searchOk = !search || item.facilityName.includes(search);
       // 영업중 여부
@@ -68,9 +69,11 @@ const CounselPage = () => {
   // --- 드래그 관련(모달) ---
   const [dragStartY, setDragStartY] = useState<number | null>(null);
   const [dragOffset, setDragOffset] = useState<number>(0);
-  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => setDragStartY(e.touches[0].clientY);
+  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) =>
+    setDragStartY(e.touches[0].clientY);
   const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (dragStartY !== null) setDragOffset(Math.max(0, e.touches[0].clientY - dragStartY));
+    if (dragStartY !== null)
+      setDragOffset(Math.max(0, e.touches[0].clientY - dragStartY));
   };
   const onTouchEnd = () => {
     if (dragOffset > 80) setIsFilterOpen(false);
@@ -81,13 +84,16 @@ const CounselPage = () => {
   return (
     <div className="relative bg-[#f5f5f5] min-h-screen pb-24 overflow-y-auto">
       {/* 상단 고정바 */}
-      <div className="sticky top-0 z-20 bg-white shadow-md pt-4 pb-2 px-4" style={{ minHeight: 80 }}>
+      <div
+        className="sticky top-0 z-20 bg-white shadow-md pt-4 pb-2 px-4"
+        style={{ minHeight: 80 }}
+      >
         <div className="flex items-center gap-2">
           <div className="flex-1 relative">
             <input
               className="border border-blue-200 px-3 py-2 rounded-2xl w-full text-base"
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               placeholder="시설명 검색"
             />
             <button className="absolute right-2 top-1/2 -translate-y-1/2 p-1">
@@ -128,7 +134,9 @@ const CounselPage = () => {
         {loading ? (
           <div className="text-center text-gray-400 mt-10">로딩중...</div>
         ) : filteredList.length === 0 ? (
-          <div className="text-center text-gray-400 mt-10">검색 결과가 없습니다.</div>
+          <div className="text-center text-gray-400 mt-10">
+            검색 결과가 없습니다.
+          </div>
         ) : (
           filteredList.map((item, idx) => (
             <CounselCard
@@ -159,7 +167,7 @@ const CounselPage = () => {
               transform: `translateY(${dragOffset}px)`,
               transition: dragStartY ? "none" : "transform 0.2s",
             }}
-            onClick={e => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
@@ -169,18 +177,22 @@ const CounselPage = () => {
             <div className="mb-4">
               <div className="font-semibold mb-2">영업상태</div>
               <div className="flex gap-2 flex-wrap">
-                {statusList.map(v => (
+                {statusList.map((v) => (
                   <button
                     key={v}
                     className={`
                       px-3 py-1 rounded border text-sm
-                      ${status === v
-                        ? "bg-[#b3dfd6] font-bold border-[#8ccfb6] text-gray-900"
-                        : "border-gray-300 text-gray-700 bg-white"}
+                      ${
+                        status === v
+                          ? "bg-[#b3dfd6] font-bold border-[#8ccfb6] text-gray-900"
+                          : "border-gray-300 text-gray-700 bg-white"
+                      }
                       transition
                     `}
                     onClick={() => setStatus(v)}
-                  >{v}</button>
+                  >
+                    {v}
+                  </button>
                 ))}
               </div>
             </div>
@@ -188,18 +200,22 @@ const CounselPage = () => {
             <div className="mb-4">
               <div className="font-semibold mb-2">카테고리</div>
               <div className="flex gap-2 flex-wrap">
-                {typeList.map(v => (
+                {typeList.map((v) => (
                   <button
                     key={v}
                     className={`
                       px-3 py-1 rounded border text-sm
-                      ${type === v
-                        ? "bg-[#b3dfd6] font-bold border-[#8ccfb6] text-gray-900"
-                        : "border-gray-300 text-gray-700 bg-white"}
+                      ${
+                        type === v
+                          ? "bg-[#b3dfd6] font-bold border-[#8ccfb6] text-gray-900"
+                          : "border-gray-300 text-gray-700 bg-white"
+                      }
                       transition
                     `}
                     onClick={() => setType(v)}
-                  >{v}</button>
+                  >
+                    {v}
+                  </button>
                 ))}
               </div>
             </div>

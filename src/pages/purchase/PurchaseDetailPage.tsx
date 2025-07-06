@@ -12,10 +12,11 @@ import {
 } from "../../apis/purchase";
 import useCommentStore from "../../stores/comment";
 import SellerCard from "../../components/purchase/SellerCard";
+import profileImg1 from "../../assets/purchase/profile_img1.jpg";
 
 const mockSeller = {
   name: "아이셔",
-  profileImageUrl: "https://via.placeholder.com/40",
+  profileImageUrl: profileImg1,
   comment: "안녕하세요! 현재 공동구매를 진행하고 있는 판매자 아이셔입니다.",
 };
 
